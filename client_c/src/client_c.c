@@ -102,6 +102,16 @@ int main() {
     
     printf("\n[DEBUG] Request (%d bytes):\n%s", (int)strlen(request), request);
     
+    printf("=== DEBUG PROTOCOL DUMP ===\n");
+    printf("Bytes to send: %d\n", (int)strlen(request));
+    printf("Hex dump:\n");
+    for(int i = 0; i < strlen(request); i++) {
+      printf("%02X ", (unsigned char)request[i]);
+      if(request[i] == '\n') printf(" [LF]\n");
+      else if(request[i] == '\r') printf(" [CR]");
+  }
+      printf("\n=== END DUMP ===\n\n");
+
     // Send request
     printf("\n--- SENDING REQUEST ---\n");
     
