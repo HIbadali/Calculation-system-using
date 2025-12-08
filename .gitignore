@@ -4,5 +4,23 @@
 # Ignore compiled Java class files
 *.class
 
-# Ignore server log files
+# Ignore compiled C executables and DLLs
+*.exe
+*.dll
+
+# Ignore object files and other build artifacts
+*.o
+*.obj
+
+# Ignore server log files (keep only sample logs if needed)
 server.log
+*.log
+
+# Ignore temporary files
+*.tmp
+*.bak
+*.swp
+
+# Ignore OS-specific files
+Thumbs.db
+.DS_Store
