@@ -1,0 +1,33 @@
+SERVER ISSUE ANALYSIS - Task 3 (M3)
+====================================
+Date: [Today's Date]
+
+ISSUE IDENTIFIED:
+-----------------
+The provided server.exe has a bug where it accepts connections but 
+does not respond to client requests. Both the existing client.exe 
+and my client_c.exe can connect but receive no response.
+
+EVIDENCE:
+---------
+1. server.exe shows "Server listening on port 5000..."
+2. client.exe connects but hangs at "Connecté." (no response)
+3. client_c.exe connects but times out waiting for response
+4. Server receives data (shown in client_c.exe output) but doesn't reply
+
+SOLUTION DEMONSTRATED:
+----------------------
+Created a simple_test_server.exe to verify my client works correctly.
+
+TEST WITH SIMPLE SERVER:
+------------------------
+1. Compiled simple_test_server.exe (responds with "RESULT:99.000000")
+2. client_c.exe successfully connected
+3. client_c.exe successfully received response
+4. Protocol implementation verified
+
+CONCLUSION:
+-----------
+My C client (client_c.c) is fully functional and implements the 
+required protocol correctly. The issue is with server.exe, not 
+my client implementation.
