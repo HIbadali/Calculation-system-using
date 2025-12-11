@@ -33,11 +33,15 @@ public class JavaClient {
 
                 System.out.println("[Client] Connected to server...");
 
-                // 3. Send Data following strict Protocol
-                out.println("NUMBER : " + n1);
-                out.println("NUMBER : " + n2);
-                out.println("OPERATOR : " + op);
+               // PASTE THIS FIX
+                // 1. Build the full message first using \n (newline)
+                String fullMessage = "NUMBER:" + n1 + "\n" +
+                                    "NUMBER:" + n2 + "\n" +
+                                    "OPERATOR:" + op + "\n";
 
+                // 2. Send it as ONE block
+                out.print(fullMessage);
+                out.flush(); // Push it to the network immediately
                 // 4. Receive Result
                 String response = in.readLine();
                 
