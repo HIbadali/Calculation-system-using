@@ -4,9 +4,7 @@
 # Ignore compiled Java class files
 *.class
 
-# Ignore compiled C executables and DLLs
-*.exe
-*.dll
+
 
 # Ignore object files and other build artifacts
 *.o
