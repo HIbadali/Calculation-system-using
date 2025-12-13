@@ -1,39 +1,53 @@
-# Integration & Testing – Yasmine
+Integration & Testing – Yasmine
+Overview
+I am responsible for validating the stability and correctness of the distributed calculation system under stress and ensuring full integration between the Java components and the native C calculation engine through the JNI bridge.
 
-## Overview
-I am responsible for validating the stability and correctness of the distributed calculation system under stress, and ensuring smooth integration between Java and native C components via JNI.
+Deliverables
+Stress Tester (integration/StressTester.java)
+A multithreaded Java client that spawns 50 concurrent connections to the TCP calculation server, sending randomized requests (NUMBER:a, NUMBER:b, OPERATOR:op) and printing the server’s structured responses.
 
-## Deliverables
-- **Stress Tester (integration/StressTester.java)**  
-  A multithreaded Java client that spawns 50 concurrent connections to the server. Each client sends randomized requests (`NUMBER:a`, `NUMBER:b`, `OPERATOR:op`) and prints the server’s response.  
-  - Verified correct handling of valid operations (+, -, *, /).  
-  - Verified error handling for invalid operators and division by zero.  
-  - Confirmed server stability under concurrent load.
+Verified correct handling of valid operations (+, -, *, /) with RESULT:<value> responses.
 
-- **JNI Bridge Stub (integration/CalculatorBridge.java)**  
-  A Java class prepared to load the native library (`calculator.dll` on Windows, `libcalculator.so` on Linux).  
-  - Declares the native method `calculate(int a, int b, char op)`.  
-  - Pending implementation in `native/calculator.c`.
+Verified error handling for invalid operators, invalid formats, non‑numeric values, and division by zero via ERROR:<description> responses.
 
-## Test Results
-- **Server Executable (`server.exe`)**  
-  - Successfully handled 50 concurrent requests.  
-  - Responses returned correctly in terminal output.  
-  - `server.log` entries confirmed with timestamps, client IPs, requests, and results/errors.  
-  - No crashes or corruption observed during stress testing.
+Confirmed server stability under concurrent load and that all operations are logged with timestamps.
 
-- **Stress Tester Output**  
-  - Multiple `RESULT: …` lines observed for valid operations.  
-  - Proper `ERROR: …` messages for invalid inputs.  
-  - Demonstrated robustness under randomized inputs.
+JNI Bridge (integration/CalculatorBridge.java + native engine)
+A Java class that loads the native calculation library (calc_engine.dll on Windows) and delegates arithmetic operations to the C implementation.
 
-## Pending Work
-- **Native Integration**  
-  - Awaiting delivery of `calculator.c` implementation.  
-  - Once compiled into `calculator.dll`, JNI bridge will be tested with direct Java ↔ C calls.  
-  - Current bridge stub (`CalculatorBridge.java`) is ready for integration.
+Declares and uses the native method calculate(int a, int b, char op) which is implemented in Calculation_engine/calc_engine.c and exposed via integration_CalculatorBridge.h.
 
-## Notes
-- Stress testing confirms socket-based communication is stable.  
-- JNI testing will be finalized once the native library is available.  
-- Documentation and test logs are maintained for grading and portfolio presentation.
+Successfully integrated with the TCP server so that all client requests are processed by the native engine instead of the previous mock function.
+
+Test Results
+Server Executable (calc_server.exe)
+
+Successfully handled 50 concurrent requests from the StressTester, with correct routing of all calculations to the native engine.
+
+Responses returned correctly in the terminal output and matched the results produced directly by the C engine for the same inputs.
+
+Log file entries confirmed that each request and result/error was recorded without crashes or data corruption under stress.
+
+Stress Tester Output
+
+Multiple RESULT:… lines observed for valid operations, matching expected native computation results.
+
+Proper ERROR:… messages for invalid inputs and division by zero, consistent with both the Java protocol and the native error handling.
+
+Demonstrated robustness of the complete chain: Java client → TCP server → JNI bridge → C engine → back to client.
+
+Completed Work
+Native Integration
+
+Replaced the initial mock JNI implementation with the final native engine (calc_engine.c) compiled into calc_engine.dll and loaded by CalculatorBridge.
+
+Validated Java ↔ C calls through unit tests on CalculatorBridge and end‑to‑end tests using the StressTester and TCP server.
+
+Confirmed that the integration respects the project protocol (NUMBER, OPERATOR, RESULT, ERROR) and can be reused by the web gateway defined in the project specification.
+
+Notes
+Stress testing confirms that socket‑based communication and the JNI bridge remain stable even under high concurrency.
+
+The current implementation is ready to be plugged into the web TCP gateway so that HTTP requests from the mini web platform can transparently use the native calculation engine.
+
+All scripts, configuration notes, and representative test logs are maintained in the repository for grading
