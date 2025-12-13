@@ -148,7 +148,7 @@ Here's what I'm submitting for Task 3:
 | `client_c.exe` | Compiled program (ready to run) |
 | `compile.bat` | One-click compilation script |
 | `README_M3.md` | This documentation file |
-| `test_results.txt` | Logs proving everything works |
+
 
 ---
 
