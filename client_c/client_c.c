@@ -10,7 +10,7 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-#define SERVER_IP "127.0.0.1"
+#define SERVER_IP "192.168.197.216"
 #define SERVER_PORT 5000
 #define BUFFER_SIZE 1024
 
