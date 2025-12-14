@@ -73,7 +73,7 @@ int main() {
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_port = htons(SERVER_PORT);
-    addr.sin_addr.s_addr = inet_addr("192.168.197.216");
+    addr.sin_addr.s_addr = inet_addr("0.0.0.0");
 
     bind(server, (struct sockaddr*)&addr, sizeof(addr));
     listen(server, 10);
