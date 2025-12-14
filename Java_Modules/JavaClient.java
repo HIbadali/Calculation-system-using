@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class JavaClient {
     public static void main(String[] args) {
         String hostname = "127.0.0.1";
-        // Ensure this matches the C server port (5000) or Java Server port (likely 12345 later)
+        
         int port = 6000; 
 
         Scanner userIn = new Scanner(System.in);
